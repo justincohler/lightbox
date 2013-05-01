@@ -1,0 +1,178 @@
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="lightbox.css">
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
+		</script>
+		<script>
+			// SET UP VARIABLES FOR LIGHTBOX
+			var lightbox = $('#lightbox-outer');
+			var shadow = $('#lightbox-shadow');
+			if($(window).height() > 500 && $(window).width() > 800){
+				$(lightbox).css('position', 'fixed');
+				$(shadow).css('position', 'fixed');
+			}
+			// KEEP THE LIGHTBOX CENTERED IN WINDOW
+			$(window).resize(function(){
+				if($(this).height() > 500 && $(window).width() > 800){
+					$(lightbox).css('position', 'fixed');
+					$(shadow).css('position', 'fixed');
+				}
+				else{
+					$(lightbox).css('position', 'static');
+					$(shadow).css('position', 'static');
+				}
+			});
+			// OPEN THE LIGHTBOX WHEN LINK IS CLICKED
+			function openBox(){
+				$('#lightbox-outer').fadeIn(1000);
+				$('#lightbox-inner').fadeIn(1000);
+				$('#lightbox-shadow').fadeIn(1000);
+			}
+			// CLOSE THE LIGHTBOX WHEN LINK IS CLICKED
+			function closeBox(){
+				$('#lightbox-outer').fadeOut(1000);
+				$('#lightbox-inner').fadeOut(1000);
+				$('#lightbox-shadow').fadeOut(1000);
+			}
+			
+			// THE FOLLOWING SHOW EACH OF THE 6 VIEWS, DIRECTED BY THE 6 THUMBNAILS
+			function showExcerpt(){
+				hideAll();
+				$('#excerpt').append('<p>The greatest ride of my life was about to come up, a truck, with a flatboard at the back, with about six or seven boys sprawled out on it, and the drivers, two young blond farmers from Minnesota, were picking up every single soul they found on that road -- the most smiling, cheerful couple of handsome bumpking you could ever wish to see, both wearing cotton shirts and overalls, nothing else; both thick-wristed and earnest, with broad how are you smiles for anybody and anything that came across their path.  I ran up, said &quot;Is there room?&quot; They said, &quot;Sure, hop on, 	&rsquo;sroom for everybody.&quot;</p>');
+				$('#excerpt').find('p').fadeOut(0);
+				$('#excerpt').find('p').fadeIn(500);
+				adjustSizes();
+			}
+			function show2(){
+				hideAll();
+				$('#excerpt').append('<div><img src="images/jack2.jpg" alt=""/></div>');
+				$('#excerpt').find('img').animate({height: "200px", width: "200px"}, 800);
+			}
+			function show3(){
+				hideAll();
+				$('#excerpt').append('<div><img src="images/allen.jpg" alt=""/></div>');
+				$('#excerpt').find('img').animate({height: "200px", width: "200px"}, 800);
+			}
+			function show4(){
+				hideAll();
+				$('#excerpt').append('<div><img src="images/joan.jpg" alt=""/></div>');
+				$('#excerpt').find('img').animate({height: "200px", width: "200px"}, 800);
+			}
+			function show5(){
+				hideAll();
+				$('#excerpt').append('<div><img src="images/william.jpg" alt=""/></div>');
+				$('#excerpt').find('img').animate({height: "200px", width: "200px"}, 800);
+			}
+			function show6(){
+				hideAll();
+				$('#excerpt').append('<div><img src="images/lucien.jpg" alt=""/></div>');
+				$('#excerpt').find('img').animate({height: "200px", width: "200px"}, 800);
+			}
+			function hideAll() {
+				$('#excerpt').find('p').fadeOut(500);
+				$('#excerpt p').remove();
+				$('#excerpt div').remove();
+			}
+
+		</script>
+		<script>
+			// SET UP VARIABLES FOR SCROLL RESIZE
+			var doc_height = $("#content").height();
+			var max_width = 800;
+			var min_width = Math.floor(800/3);
+			var max_pad = 6;
+			var min_pad = 2;
+			var max_marg = 45;
+			var min_marg = 10;
+			var max_font = 18;
+			var min_font = 13;
+			
+			// DEFINE THE SCROLLING ACTION TO CALL THE LIGHTBOX ADJUSTMENT FUNC
+			$(window).scroll(function() {
+				adjustSizes();
+			});
+			
+			// THIS FUNCTION ADJUSTS THE SIZE OF THE LIGHTBOX BASED ON WINDOW SCROLL
+			function adjustSizes() {
+				// GET AMOUNT SCROLLED
+				var amt_scrolled = $(window).scrollTop();
+				var new_width=0;
+				var window_height = $(window).height();
+				var max_scroll = 2000 - window_height;
+				
+				// CALCULATE THE NEW WIDTH OF THE LIGHTBOX
+				var shrink_factor = (max_scroll - amt_scrolled)/max_scroll;
+				
+				var new_width = min_width + Math.floor((max_width-min_width)*shrink_factor);
+				var new_pad = min_pad + Math.floor((max_pad-min_pad)*shrink_factor);
+				var new_marg = min_marg + Math.floor((max_marg-min_marg)*shrink_factor);
+				var new_font = min_font + Math.floor((max_font-min_font)*shrink_factor);
+				
+				// ANIMATE LIGHTBOX
+				$("#lightbox-outer").css("width", new_width);
+				$("#lightbox-inner").animate({width: new_width}, 1);
+				$(".thumbnail").css("padding", new_pad);
+				$("#carousel").css("margin-left", new_marg);
+				$("#excerpt p").css("font-size", new_font + "px");
+			}
+		</script>
+	</head>
+	<body>
+		<div id="content">
+			<a href="JavaScript:void(0);" onclick="openBox();">Display Lightbox</a>
+			<div id="lightbox-outer">
+				<div id="lightbox-inner">
+					<div id="close">
+						<a href="JavaScript:void(0);" onclick="closeBox();"><img src="images/close.png" alt=""/></a>
+					</div>
+					<div id="carousel">
+						<div id="img1" class="thumbnail">
+							<a href="JavaScript:void(0);" onclick='showExcerpt();'><img src="images/jack1.jpg" alt=""/></a>
+						</div>
+						<div id="img2" class="thumbnail">
+							<a href="JavaScript:void(0);" onclick='show2();'><img src="images/jack2.jpg" alt=""/></a>
+						</div>
+						<div id="img3" class="thumbnail">
+							<a href="JavaScript:void(0);" onclick='show3();'><img src="images/allen.jpg" alt=""/></a>
+						</div>
+						<div id="img4" class="thumbnail">
+							<a href="JavaScript:void(0);" onclick='show4();'><img src="images/joan.jpg" alt=""/></a>
+						</div>
+						<div id="img5" class="thumbnail">
+							<a href="JavaScript:void(0);" onclick='show5();'><img src="images/william.jpg" alt=""/></a>
+						</div>
+						<div id="img6" class="thumbnail">
+							<a href="JavaScript:void(0);" onclick='show6();'><img src="images/lucien.jpg" alt=""/></a>
+						</div>
+					</div>
+					<div class="padTop1"></div>
+					<div class="separator"></div>
+					<div class="separator"></div>
+					<div id="excerpt">
+						<p>
+							The greatest ride of my life was about to come up, a truck, 
+							with a flatboard at the back, with about six or seven boys 
+							sprawled out on it, and the drivers, two young blond farmers 
+							from Minnesota, were picking up every single soul they found 
+							on that road -- the most smiling, cheerful couple of handsome 
+							bumpking you could ever wish to see, both wearing cotton shirts 
+							and overalls, nothing else; both thick-wristed and earnest, 
+							with broad how are you smiles for anybody and anything that came 
+							across their path.  I ran up, said &quot;Is there room?&quot;  
+							They said, &quot;Sure, hop on, 	&rsquo;sroom for everybody.&quot;
+						</p>
+					</div>
+					<div id="footer">
+						<div id="kerouac">
+							Jack Kerouac
+						</div>
+						<div id="on-the-road">
+							ON THE ROAD
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="lightbox-shadow"/>
+	</body>
+</html>
